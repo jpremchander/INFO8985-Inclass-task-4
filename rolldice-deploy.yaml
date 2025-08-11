@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolldice-app
+  namespace: default
+  labels:
+    app: rolldice-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rolldice-app
+  template:
+    metadata:
+      labels:
+        app: rolldice-app
+    spec:
+      containers:
+      - name: rolldice-app
+        image: signoz/sample-flask-app:latest
+        ports:
+          - containerPort: 5002
+        env:
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://k8s-infra-otel-collector.default:4317"
+        - name: OTEL_SERVICE_NAME
+          value: "rolldice-app"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rolldice-app
+  namespace: default
+spec:
+  selector:
+    app: rolldice-app
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
+      nodePort: 32523
+  type: NodePort

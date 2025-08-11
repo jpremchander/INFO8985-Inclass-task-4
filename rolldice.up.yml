@@ -1,0 +1,8 @@
+---
+- name: Deploy rolldice app to Kubernetes
+  hosts: localhost
+  tasks:
+    - name: Apply rolldice deployment manifest
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ playbook_dir }}/rolldice-deploy.yaml"
