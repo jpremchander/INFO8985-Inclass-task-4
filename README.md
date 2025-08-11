@@ -69,7 +69,10 @@ for i in {1..50}; do curl "http://localhost:5000/rolldice?player=alice"; done
 
 ### 6. Screenshots (add manually)
 - _Screenshot: SigNoz UI main dashboard_
+![alt text](image.png)
+
 - _Screenshot: rolldice-app traces/metrics_
+![alt text](image-1.png)
 
 ## Configuration
 - Edit `rolldice.py` to set the correct OTLP exporter endpoint (see code comments)
